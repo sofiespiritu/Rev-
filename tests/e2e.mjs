@@ -62,6 +62,12 @@ try {
   await tab('Texto'); await page.locator('.row:has(.lbl:text("Color")) .sw').nth(3).click();
   ok((await app(() => REV_APP.findEl('el_hola').el.color)) === '#ffd1e3', 'Cambiar el color del texto');
 
+  const [fcf] = await Promise.all([page.waitForEvent('filechooser'), page.locator('button', { hasText: 'Subir tipografía' }).click()]);
+  await fcf.setFiles(join(root, 'tests/fixtures/fuente-prueba.otf'));
+  await page.waitForTimeout(800);
+  const fnt = await app(() => { const el = REV_APP.findEl('el_hola').el; const id = el.fontFamily.slice(6); return { ff: el.fontFamily, type: REV_APP.state.manifest.assets[id] && REV_APP.state.manifest.assets[id].type, loaded: document.fonts.check('20px "rev-font-' + id + '"'), css: getComputedStyle(document.querySelector('#stage .el[data-id=el_hola] .txt')).fontFamily }; });
+  ok(/^asset:/.test(fnt.ff) && fnt.type === 'font' && fnt.loaded && /rev-font-/.test(fnt.css), 'Subir una tipografía y aplicarla al texto', fnt);
+
   /* 4. recolorear personaje (paleta SVG) */
   await page.locator('.bar.el-image', { hasText: 'Sofi' }).first().click();
   const dress = row('Vestido').locator('input[type=color]');
@@ -145,6 +151,7 @@ try {
   ok(m2.scenes[0].elements.find((e) => e.id === 'el_sofi').paletteOverrides.dress === '#22aa88', 'Paleta recoloreada guardada');
   const missing = Object.values(m2.assets).filter((a) => !z.file(a.path));
   ok(missing.length === 0, 'Todos los recursos referenciados existen en el ZIP', missing.map((a) => a.path));
+  ok(Object.values(m2.assets).some((a) => a.type === 'font' && z.file(a.path)) && /^asset:/.test(el2.fontFamily), 'La tipografía subida viaja dentro del ZIP');
   ok(!!z.file('assets/characters/sofi.svg') && !!z.file('assets/audio/musica.mp3') && !!z.file('assets/videos/clip-demo.mp4'), 'Se conservan los recursos originales (SVG, audio, video)');
   try { execFileSync('node', [join(root, 'tools/validate.mjs'), dlPath], { stdio: 'pipe' }); ok(true, 'tools/validate.mjs acepta el ZIP descargado'); } catch (e) { ok(false, 'validate.mjs', String(e.stdout)); }
 

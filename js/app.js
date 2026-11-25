@@ -405,12 +405,12 @@
     if (blob !== file && blob.type === 'image/jpeg') ext = 'jpg';
     const id = S.uid('a');
     const slug = file.name.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 24) || 'archivo';
-    const folder = { image: 'images', video: 'videos', audio: 'audio' }[kind];
+    const folder = { image: 'images', video: 'videos', audio: 'audio', font: 'fonts' }[kind];
     const path = 'assets/' + folder + '/' + slug + '-' + id.slice(2) + '.' + ext;
     app.state.files.set(path, blob.slice(0, blob.size, Z.mimeOf(path)));
     app.state.added.add(id);
     app.edit((m) => { m.assets[id] = { type: kind, path, name: file.name }; apply(m, id); }, { props: true });
-    toast('Archivo reemplazado');
+    if (kind === 'font') { await app.loadFonts(); toast('Tipografía añadida'); } else toast('Archivo reemplazado');
   }
   function replaceButton(label, kind, accept, apply) {
     return h('button', { class: 'btn', type: 'button', onclick: async () => { const f = await pickFile(accept); if (f) replaceAsset(kind, f, apply); } }, label);
@@ -466,6 +466,7 @@
         const flabels = Object.assign({}, REV.FONT_PRESETS); fonts.forEach((fk) => { if (fk.startsWith('asset:')) flabels[fk] = this.state.manifest.assets[fk.slice(6)].name; });
         if (!fonts.includes(el.fontFamily)) { fonts.push(el.fontFamily); flabels[el.fontFamily] = el.fontFamily; }
         box.append(selectRow('Tipo de letra', fonts, () => E_().fontFamily, (v) => set((e) => { e.fontFamily = v; }), flabels));
+        box.append(h('div', { class: 'btnrow' }, replaceButton('🔤 Subir tipografía (.ttf .otf .woff2)', 'font', '.ttf,.otf,.woff,.woff2', (mm, aid) => { this.findEl(id).el.fontFamily = 'asset:' + aid; })));
         box.append(numRow('Tamaño', { min: 16, max: 320, step: 2, unit: 'px', get: () => E_().fontSize, set: (v) => set((e) => { e.fontSize = v; }, 'fs') }));
         box.append(colorRow('Color', () => E_().color, (v) => set((e) => { e.color = v; }, 'col')));
         box.append(selectRow('Grosor', ['400', '600', '700', '900'], () => String(E_().fontWeight), (v) => set((e) => { e.fontWeight = +v; }), { 400: 'Normal', 600: 'Seminegrita', 700: 'Negrita', 900: 'Extra negrita' }));
