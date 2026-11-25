@@ -2,7 +2,7 @@
 """Genera el proyecto de prueba REV (examples/proyecto_prueba) y su ZIP.
 
 Uso:  python3 tools/make_sample.py --photo "Foto .JPG" --voice voz_limpia.wav --logo "Logo normal .PNG"
-Los personajes son PROVISIONALES (dibujados aquí) hasta que lleguen los de Juanita y María.
+Los personajes son PROVISIONALES (dibujados aquí) hasta que tengas tus propios personajes.
 El ZIP se escribe SIN compresión (STORE): es lo más compatible con Safari/iPhone.
 """
 import argparse, json, os, shutil, subprocess, zipfile

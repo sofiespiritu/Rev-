@@ -77,7 +77,7 @@ const [chooser] = await Promise.all([page.waitForEvent('filechooser'), page.clic
 await chooser.setFiles(path.join(ROOT, 'examples/proyecto_prueba/assets/characters/personaje_2.png'));
 await page.waitForTimeout(400);
 const rep = await page.evaluate(() => { const P = window.__REV.project; const e = P.scenes[0].elements.find((e) => e.id === 's1_personaje'); return { asset: e.asset, path: P.assets[e.asset].path, has: window.__REV.files.has(P.assets[e.asset].path) }; });
-ok(rep.asset !== 'juanita' && rep.has, `reemplaza la imagen (nuevo recurso ${rep.path})`);
+ok(rep.asset !== 'personaje_1' && rep.has, `reemplaza la imagen (nuevo recurso ${rep.path})`);
 // 2e animación: cambiar entrada de Personaje 1 a zoom
 await page.evaluate(() => { const row = [...document.querySelectorAll('#panel .row')].find((r) => r.querySelector('label')?.textContent === 'Entrada'); const s = row.querySelector('select'); s.value = 'zoom'; s.dispatchEvent(new Event('change')); });
 ok(await page.evaluate(() => window.__REV.project.scenes[0].elements.find((e) => e.id === 's1_personaje').in.type) === 'zoom', 'cambia la animación de entrada');
