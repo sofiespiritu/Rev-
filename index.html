@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#14121a">
+<title>REV · Editor de videos</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<div id="home" class="home">
+  <div class="home-card">
+    <div class="logo">REV</div>
+    <p class="tag">Editor visual de videos · Espirit Beauty</p>
+    <label class="btn primary big" for="fileOpen">📂 Abrir proyecto (.zip)</label>
+    <input id="fileOpen" type="file" accept=".zip,application/zip,application/x-zip-compressed" hidden>
+    <button id="btnResume" class="btn big" hidden>↩ Continuar el último guardado</button>
+    <button id="btnSample" class="btn big">🎬 Cargar proyecto de ejemplo</button>
+    <p id="homeMsg" class="msg"></p>
+    <p class="small">Todo ocurre en tu dispositivo: el ZIP no se sube a ningún servidor.</p>
+  </div>
+</div>
+
+<div id="app" class="app" hidden>
+  <header class="top">
+    <button id="btnProject" class="title" title="Proyecto"><span id="projTitle">Proyecto</span><small id="dirtyDot"></small></button>
+    <button id="btnUndo" class="icon" aria-label="Deshacer">↶</button>
+    <button id="btnRedo" class="icon" aria-label="Rehacer">↷</button>
+    <button id="btnSave" class="btn small">💾 Guardar</button>
+    <button id="btnDownload" class="btn small primary">⬇ ZIP</button>
+  </header>
+
+  <main id="main">
+    <section class="stage-wrap" id="stageWrap">
+      <div id="stageBox"><div id="stage"></div></div>
+    </section>
+
+    <section class="transport">
+      <button id="btnPlay" class="icon play" aria-label="Reproducir">▶</button>
+      <input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Posición">
+      <span id="timeLbl" class="time">0.0 / 0.0</span>
+      <button id="btnZoomOut" class="icon sm" aria-label="Alejar línea de tiempo">−</button>
+      <button id="btnZoomIn" class="icon sm" aria-label="Acercar línea de tiempo">+</button>
+      <button id="btnAddText" class="btn small">＋ Texto</button>
+    </section>
+
+    <section class="timeline" id="timeline"></section>
+
+    <section class="sheet" id="sheet">
+      <button class="sheet-head" id="sheetHead"><span class="grip"></span><span id="sheetTitle">Propiedades</span><span id="sheetArrow">▾</span></button>
+      <div id="props" class="props"></div>
+    </section>
+  </main>
+</div>
+
+<input id="filePick" type="file" hidden>
+<div id="toast" class="toast" role="status"></div>
+
+<script src="vendor/jszip.min.js"></script>
+<script src="js/schema.js"></script>
+<script src="js/zip-io.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
