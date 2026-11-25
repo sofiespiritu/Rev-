@@ -109,6 +109,16 @@ try {
   const au = await app(() => { const a = REV_APP.audioTrack('au_nar1'); return [a.volume, a.start]; });
   ok(au[0] === 0.5 && au[1] === 1.5, 'Cambiar volumen y momento de inicio del audio', au);
 
+  /* 7b. reemplazar audio con un archivo SIN extensión ni tipo (como en el iPhone) */
+  await page.locator('.bar[class*=audio-narration]').first().click();
+  const mp3 = readFileSync(join(root, 'tests/fixtures/sin-extension'));
+  const [fca] = await Promise.all([page.waitForEvent('filechooser'), page.locator('button', { hasText: 'Reemplazar audio' }).click()]);
+  ok(!(await app(() => document.getElementById('filePick').accept)), 'El selector de audio no restringe por tipo (iOS gris)');
+  await fca.setFiles({ name: 'audio', mimeType: '', buffer: mp3 });
+  await page.waitForTimeout(600);
+  const na = await app(() => { const t = REV_APP.audioTrack('au_nar1'); const a = REV_APP.state.manifest.assets[t.assetId]; return { path: a.path, type: REV_APP.state.files.get(a.path).type }; });
+  ok(/\.mp3$/.test(na.path) && na.type === 'audio/mpeg', 'Audio sin extensión se reconoce como mp3', na);
+
   /* 8. reproducción: avanza el tiempo, cambia de escena, suena audio */
   await page.locator('#btnPlay').click();
   await page.waitForTimeout(1800);

@@ -7,14 +7,14 @@
   const MIME = {
     png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', gif: 'image/gif', svg: 'image/svg+xml',
     mp4: 'video/mp4', m4v: 'video/mp4', mov: 'video/quicktime', webm: 'video/webm',
-    mp3: 'audio/mpeg', m4a: 'audio/mp4', wav: 'audio/wav', aac: 'audio/aac', ogg: 'audio/ogg',
+    mp3: 'audio/mpeg', opus: 'audio/ogg', caf: 'audio/x-caf', m4a: 'audio/mp4', wav: 'audio/wav', aac: 'audio/aac', ogg: 'audio/ogg',
     ttf: 'font/ttf', otf: 'font/otf', woff: 'font/woff', woff2: 'font/woff2', json: 'application/json',
   };
   const ext = (p) => (p.split('.').pop() || '').toLowerCase();
   const mimeOf = (p) => MIME[ext(p)] || 'application/octet-stream';
   const isMedia = (p) => /^(png|jpe?g|webp|gif|mp4|m4v|mov|webm|mp3|m4a|aac|ogg|woff2?)$/.test(ext(p));
 
-  const zipio = (REV.zipio = { mimeOf, ext });
+  const zipio = (REV.zipio = { mimeOf, ext, MIME });
 
   /** Lee un ZIP (File/Blob/ArrayBuffer) y devuelve {manifest, files:Map<path,Blob>, root}. */
   zipio.load = async function (input) {

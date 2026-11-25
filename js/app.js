@@ -396,21 +396,39 @@
       return blob || file;
     } catch (e) { return file; }
   }
+  async function sniffAudio(file) {
+    const b = new Uint8Array(await file.slice(0, 12).arrayBuffer());
+    const t = (i, n) => String.fromCharCode(...b.slice(i, i + n));
+    if (t(0, 3) === 'ID3' || (b[0] === 0xff && (b[1] & 0xe0) === 0xe0)) return 'mp3';
+    if (t(4, 4) === 'ftyp') return 'm4a';
+    if (t(0, 4) === 'RIFF') return 'wav';
+    if (t(0, 4) === 'OggS') return 'ogg';
+    if (t(0, 4) === 'caff') return 'caf';
+    return 'mp3';
+  }
   /** Añade un archivo nuevo al proyecto y llama a apply(manifest, assetId). */
   async function replaceAsset(kind, file, apply) {
     let blob = file;
     if (kind === 'image') blob = await downscale(file);
-    let ext = (file.name.split('.').pop() || '').toLowerCase();
-    if (!ext || ext === file.name.toLowerCase()) ext = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp', 'image/svg+xml': 'svg', 'video/mp4': 'mp4', 'video/quicktime': 'mov', 'audio/mpeg': 'mp3', 'audio/mp4': 'm4a', 'audio/wav': 'wav' }[file.type] || 'bin';
+    let ext = (file.name.includes('.') ? file.name.split('.').pop() : '').toLowerCase();
+    if (!ext || !Z.MIME[ext]) {
+      const byType = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp', 'image/svg+xml': 'svg', 'video/mp4': 'mp4', 'video/quicktime': 'mov', 'audio/mpeg': 'mp3', 'audio/mp3': 'mp3', 'audio/mp4': 'm4a', 'audio/x-m4a': 'm4a', 'audio/aac': 'aac', 'audio/wav': 'wav', 'audio/x-wav': 'wav', 'audio/ogg': 'ogg', 'audio/opus': 'opus', 'audio/x-caf': 'caf' }[file.type];
+      ext = byType || (kind === 'audio' ? await sniffAudio(file) : '') || ext || 'bin';
+    }
     if (blob !== file && blob.type === 'image/jpeg') ext = 'jpg';
     const id = S.uid('a');
     const slug = file.name.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 24) || 'archivo';
     const folder = { image: 'images', video: 'videos', audio: 'audio', font: 'fonts' }[kind];
     const path = 'assets/' + folder + '/' + slug + '-' + id.slice(2) + '.' + ext;
-    app.state.files.set(path, blob.slice(0, blob.size, Z.mimeOf(path)));
+    app.state.files.set(path, blob.slice(0, blob.size, Z.MIME[ext] || blob.type || Z.mimeOf(path)));
     app.state.added.add(id);
     app.edit((m) => { m.assets[id] = { type: kind, path, name: file.name }; apply(m, id); }, { props: true });
-    if (kind === 'font') { await app.loadFonts(); toast('Tipografía añadida'); } else toast('Archivo reemplazado');
+    if (kind === 'font') { await app.loadFonts(); toast('Tipografía añadida'); }
+    else if (kind === 'audio') {
+      const t = new Audio(); t.preload = 'metadata'; t.src = app.urlFor(path);
+      t.addEventListener('error', () => toast('Este navegador no puede reproducir ese audio. Usa mp3, m4a o wav.'));
+      toast('Audio reemplazado');
+    } else toast('Archivo reemplazado');
   }
   function replaceButton(label, kind, accept, apply) {
     return h('button', { class: 'btn', type: 'button', onclick: async () => { const f = await pickFile(accept); if (f) replaceAsset(kind, f, apply); } }, label);
@@ -547,7 +565,7 @@
     const set = (fn, key, props) => this.edit(() => fn(A()), { key: key ? key + id : null, props: !!props });
     box.append(textRow('Nombre', () => A().name, (v) => set((t) => { t.name = v; }, 'aun'), false));
     box.append(h('div', { class: 'row' }, h('span', { class: 'lbl' }, 'Archivo de audio'), h('div', { class: 'file-name' }, a ? a.name : '(falta el archivo)')));
-    box.append(h('div', { class: 'btnrow' }, replaceButton('🎵 Reemplazar audio', 'audio', 'audio/*', (mm, aid) => { this.audioTrack(id).assetId = aid; })));
+    box.append(h('div', { class: 'btnrow' }, replaceButton('🎵 Reemplazar audio', 'audio', '', (mm, aid) => { this.audioTrack(id).assetId = aid; })));
     box.append(selectRow('Tipo', S.AUDIO_ROLES, () => A().role, (v) => set((t) => { t.role = v; }, null, true), { narration: 'Narración', music: 'Música', sfx: 'Efecto de sonido' }));
     box.append(numRow('Volumen', { min: 0, max: 1, step: 0.05, dec: 2, get: () => A().volume, set: (v) => set((t) => { t.volume = v; }, 'vol') }));
     const sceneOpts = [''].concat(m.scenes.map((s) => s.id)), starts = S.sceneStarts(m);
