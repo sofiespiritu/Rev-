@@ -1,0 +1,373 @@
+{
+  "format": "rev-project",
+  "version": 1,
+  "meta": {
+    "name": "Proyecto de prueba REV",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "background": "#fff6f1",
+    "safeArea": {
+      "left": 90,
+      "right": 90,
+      "top": 120,
+      "bottom": 450
+    },
+    "createdBy": "Claude"
+  },
+  "assets": {
+    "bg_rosa": {
+      "type": "image",
+      "path": "assets/images/fondo_rosa.png",
+      "name": "Fondo rosa"
+    },
+    "bg_crema": {
+      "type": "image",
+      "path": "assets/images/fondo_crema.png",
+      "name": "Fondo crema"
+    },
+    "logo": {
+      "type": "image",
+      "path": "assets/images/logo_espirit_beauty.png",
+      "name": "Logo Espirit Beauty"
+    },
+    "juanita": {
+      "type": "image",
+      "path": "assets/characters/juanita.png",
+      "name": "Juanita (provisional)"
+    },
+    "maria": {
+      "type": "image",
+      "path": "assets/characters/maria.png",
+      "name": "María (provisional)"
+    },
+    "primer": {
+      "type": "image",
+      "path": "assets/products/primer_elf.png",
+      "name": "Primer e.l.f."
+    },
+    "voz": {
+      "type": "audio",
+      "path": "assets/audio/narracion_prueba.m4a",
+      "name": "Narración de prueba"
+    },
+    "poppins": {
+      "type": "font",
+      "path": "assets/fonts/Poppins-Bold.ttf",
+      "family": "Poppins",
+      "name": "Poppins Bold"
+    },
+    "cardo": {
+      "type": "font",
+      "path": "assets/fonts/Cardo-Bold.ttf",
+      "family": "Cardo",
+      "name": "Cardo Bold"
+    }
+  },
+  "scenes": [
+    {
+      "id": "scene_1",
+      "name": "Pregunta",
+      "duration": 5,
+      "background": {
+        "color": "#fff0f4",
+        "asset": "bg_rosa",
+        "fit": "cover"
+      },
+      "elements": [
+        {
+          "id": "s1_logo",
+          "type": "image",
+          "name": "Logo",
+          "x": 540,
+          "y": 215,
+          "width": 190,
+          "height": 190,
+          "rotation": 0,
+          "opacity": 1,
+          "start": 0,
+          "duration": 0,
+          "visible": true,
+          "locked": false,
+          "asset": "logo",
+          "fit": "contain",
+          "in": {
+            "type": "fade",
+            "duration": 0.6,
+            "easing": "easeOut"
+          }
+        },
+        {
+          "id": "s1_chispas",
+          "type": "effect",
+          "name": "Destellos",
+          "x": 540,
+          "y": 900,
+          "width": 820,
+          "height": 900,
+          "rotation": 0,
+          "opacity": 1,
+          "start": 0.6,
+          "duration": 0,
+          "visible": true,
+          "locked": false,
+          "effect": "sparkles",
+          "color": "#ffffff",
+          "count": 16,
+          "size": 34,
+          "speed": 1,
+          "seed": 7
+        },
+        {
+          "id": "s1_juanita",
+          "type": "image",
+          "name": "Juanita",
+          "x": 540,
+          "y": 1010,
+          "width": 560,
+          "height": 840,
+          "rotation": 0,
+          "opacity": 1,
+          "start": 0.3,
+          "duration": 0,
+          "visible": true,
+          "locked": false,
+          "asset": "juanita",
+          "fit": "contain",
+          "in": {
+            "type": "slide-up",
+            "duration": 0.7,
+            "easing": "easeOut"
+          },
+          "loop": {
+            "type": "float",
+            "amount": 1,
+            "speed": 1
+          }
+        },
+        {
+          "id": "s1_texto",
+          "type": "text",
+          "name": "Pregunta",
+          "x": 540,
+          "y": 470,
+          "width": 800,
+          "height": 240,
+          "rotation": 0,
+          "opacity": 1,
+          "start": 0.8,
+          "duration": 0,
+          "visible": true,
+          "locked": false,
+          "text": "¿Por qué sus envíos tardan tanto?",
+          "font": "Cardo",
+          "fontSize": 84,
+          "fontWeight": 700,
+          "color": "#5a1f33",
+          "align": "center",
+          "lineHeight": 1.1,
+          "stroke": {
+            "color": "#ffffff",
+            "width": 0
+          },
+          "shadow": false,
+          "in": {
+            "type": "pop",
+            "duration": 0.6,
+            "easing": "back"
+          }
+        }
+      ],
+      "audio": [
+        {
+          "id": "a1",
+          "asset": "voz",
+          "start": 0.3,
+          "volume": 1,
+          "trimStart": 0,
+          "label": "Narración de prueba"
+        }
+      ]
+    },
+    {
+      "id": "scene_2",
+      "name": "Respuesta",
+      "duration": 5,
+      "background": {
+        "color": "#fff6f1",
+        "asset": "bg_crema",
+        "fit": "cover"
+      },
+      "elements": [
+        {
+          "id": "s2_maria",
+          "type": "image",
+          "name": "María",
+          "x": 400,
+          "y": 1000,
+          "width": 540,
+          "height": 810,
+          "rotation": 0,
+          "opacity": 1,
+          "start": 0,
+          "duration": 0,
+          "visible": true,
+          "locked": false,
+          "asset": "maria",
+          "fit": "contain",
+          "in": {
+            "type": "slide-right",
+            "duration": 0.7,
+            "easing": "easeOut"
+          },
+          "loop": {
+            "type": "sway",
+            "amount": 0.6,
+            "speed": 1
+          }
+        },
+        {
+          "id": "s2_producto",
+          "type": "image",
+          "name": "Producto",
+          "x": 770,
+          "y": 980,
+          "width": 250,
+          "height": 650,
+          "rotation": 0,
+          "opacity": 1,
+          "start": 0.5,
+          "duration": 0,
+          "visible": true,
+          "locked": false,
+          "asset": "primer",
+          "fit": "contain",
+          "in": {
+            "type": "zoom",
+            "duration": 0.6,
+            "easing": "easeOut"
+          },
+          "loop": {
+            "type": "pulse",
+            "amount": 1,
+            "speed": 1
+          }
+        },
+        {
+          "id": "s2_chispas",
+          "type": "effect",
+          "name": "Destellos",
+          "x": 770,
+          "y": 980,
+          "width": 420,
+          "height": 700,
+          "rotation": 0,
+          "opacity": 1,
+          "start": 0.9,
+          "duration": 0,
+          "visible": true,
+          "locked": false,
+          "effect": "sparkles",
+          "color": "#e8a0b8",
+          "count": 12,
+          "size": 40,
+          "speed": 1.3,
+          "seed": 21
+        },
+        {
+          "id": "s2_pildora",
+          "type": "shape",
+          "name": "Pastilla",
+          "x": 540,
+          "y": 380,
+          "width": 760,
+          "height": 150,
+          "rotation": 0,
+          "opacity": 1,
+          "start": 0.2,
+          "duration": 0,
+          "visible": true,
+          "locked": false,
+          "shape": "rounded",
+          "fill": "#c24770",
+          "radius": 75,
+          "stroke": {
+            "color": "#ffffff",
+            "width": 0
+          },
+          "in": {
+            "type": "slide-down",
+            "duration": 0.6,
+            "easing": "easeOut"
+          }
+        },
+        {
+          "id": "s2_titulo",
+          "type": "text",
+          "name": "Título",
+          "x": 540,
+          "y": 380,
+          "width": 700,
+          "height": 120,
+          "rotation": 0,
+          "opacity": 1,
+          "start": 0.4,
+          "duration": 0,
+          "visible": true,
+          "locked": false,
+          "text": "Producto original",
+          "font": "Poppins",
+          "fontSize": 64,
+          "fontWeight": 700,
+          "color": "#ffffff",
+          "align": "center",
+          "lineHeight": 1.1,
+          "stroke": {
+            "color": "#ffffff",
+            "width": 0
+          },
+          "shadow": false,
+          "in": {
+            "type": "fade",
+            "duration": 0.5,
+            "easing": "easeOut"
+          }
+        },
+        {
+          "id": "s2_nota",
+          "type": "text",
+          "name": "Nota",
+          "x": 540,
+          "y": 560,
+          "width": 800,
+          "height": 130,
+          "rotation": 0,
+          "opacity": 1,
+          "start": 1.1,
+          "duration": 0,
+          "visible": true,
+          "locked": false,
+          "text": "Importado de Estados Unidos · aprox. 2 semanas",
+          "font": "Poppins",
+          "fontSize": 44,
+          "fontWeight": 700,
+          "color": "#5a1f33",
+          "align": "center",
+          "lineHeight": 1.2,
+          "stroke": {
+            "color": "#ffffff",
+            "width": 0
+          },
+          "shadow": false,
+          "in": {
+            "type": "fade",
+            "duration": 0.5,
+            "easing": "easeOut"
+          }
+        }
+      ],
+      "audio": []
+    }
+  ],
+  "audio": []
+}
