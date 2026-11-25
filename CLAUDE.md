@@ -11,7 +11,7 @@ de Espirit Beauty desde su iPhone. **Todo proyecto de video que crees para ella 
 3. Conserva sin modificar los audios y productos originales que ella envíe (cópialos a `assets/`).
 4. Lienzo 1080×1920. Textos, personajes y productos dentro del área segura (90 px por lado, 450 px abajo, ~120 px arriba).
    Fondos sobredimensionados si hace falta permitir zoom.
-5. IDs únicos y cortos; nombres de capa en español comprensibles («Juanita», «Título»), porque ella los ve en la pestaña Capas.
+5. IDs únicos y cortos; nombres de capa en español comprensibles («Personaje 1», «Título»), porque ella los ve en la pestaña Capas.
 6. Valores numéricos en px y segundos. Todo lo que ella pueda querer cambiar (texto, color, duración, posición) debe ser un
    campo del manifest, no algo incrustado en una imagen.
 7. Genera el ZIP con `zipfile.ZIP_STORED` (sin compresión) y valida: `python3 tools/validate_project.py proyecto.zip`.
@@ -31,4 +31,4 @@ de Espirit Beauty desde su iPhone. **Todo proyecto de video que crees para ella 
 
 Etapa 1 hecha: abrir ZIP, vista previa, edición de escenas/capas/propiedades/tiempo/audio, guardar y descargar ZIP.
 Pendiente: exportar MP4 1080×1920 (investigar y verificar en Safari), transiciones, más efectos.
-Los personajes del ejemplo son provisionales; los de Juanita y María aún no se han recibido.
+Los personajes del ejemplo son provisionales.

@@ -40,7 +40,7 @@ Las subcarpetas son una convención; lo que manda es `assets.<id>.path`.
     "createdBy": "Claude"
   },
   "assets": {                        // id -> archivo
-    "juanita": { "type": "image", "path": "assets/characters/juanita.png", "name": "Juanita" },
+    "personaje_1": { "type": "image", "path": "assets/characters/personaje_1.png", "name": "Personaje 1" },
     "voz":     { "type": "audio", "path": "assets/audio/voz.m4a", "name": "Narración" },
     "cardo":   { "type": "font",  "path": "assets/fonts/Cardo-Bold.ttf", "family": "Cardo", "name": "Cardo Bold" }
   },

@@ -65,8 +65,8 @@ def character(path, hair, dress, skin=(244, 204, 176), long_hair=True, accent=(1
     im.save(path)
 
 
-character(f'{OUT}/assets/characters/juanita.png', (74, 38, 42), (232, 160, 184))
-character(f'{OUT}/assets/characters/maria.png', (122, 74, 46), (194, 71, 110), skin=(236, 190, 160))
+character(f'{OUT}/assets/characters/personaje_1.png', (74, 38, 42), (232, 160, 184))
+character(f'{OUT}/assets/characters/personaje_2.png', (122, 74, 46), (194, 71, 110), skin=(236, 190, 160))
 
 ph = Image.open(a.photo).convert('RGB').crop((1750, 190, 2075, 1135))
 mask = Image.new('L', ph.size, 0)
@@ -97,8 +97,8 @@ manifest = {
         'bg_rosa': {'type': 'image', 'path': 'assets/images/fondo_rosa.png', 'name': 'Fondo rosa'},
         'bg_crema': {'type': 'image', 'path': 'assets/images/fondo_crema.png', 'name': 'Fondo crema'},
         'logo': {'type': 'image', 'path': 'assets/images/logo_espirit_beauty.png', 'name': 'Logo Espirit Beauty'},
-        'juanita': {'type': 'image', 'path': 'assets/characters/juanita.png', 'name': 'Juanita (provisional)'},
-        'maria': {'type': 'image', 'path': 'assets/characters/maria.png', 'name': 'María (provisional)'},
+        'personaje_1': {'type': 'image', 'path': 'assets/characters/personaje_1.png', 'name': 'Personaje 1 (provisional)'},
+        'personaje_2': {'type': 'image', 'path': 'assets/characters/personaje_2.png', 'name': 'Personaje 2 (provisional)'},
         'primer': {'type': 'image', 'path': 'assets/products/primer_elf.png', 'name': 'Primer e.l.f.'},
         'voz': {'type': 'audio', 'path': 'assets/audio/narracion_prueba.m4a', 'name': 'Narración de prueba'},
         'poppins': {'type': 'font', 'path': 'assets/fonts/Poppins-Bold.ttf', 'family': 'Poppins', 'name': 'Poppins Bold'},
@@ -110,14 +110,14 @@ manifest = {
          'elements': [
              el('s1_logo', 'image', 'Logo', 540, 215, 190, 190, asset='logo', fit='contain', **{'in': anim('fade')}),
              el('s1_chispas', 'effect', 'Destellos', 540, 900, 820, 900, effect='sparkles', color='#ffffff', count=16, size=34, speed=1, seed=7, start=0.6),
-             el('s1_juanita', 'image', 'Juanita', 540, 1010, 560, 840, asset='juanita', fit='contain', start=0.3, **{'in': anim('slide-up', 0.7), 'loop': {'type': 'float', 'amount': 1, 'speed': 1}}),
+             el('s1_personaje', 'image', 'Personaje 1', 540, 1010, 560, 840, asset='personaje_1', fit='contain', start=0.3, **{'in': anim('slide-up', 0.7), 'loop': {'type': 'float', 'amount': 1, 'speed': 1}}),
              el('s1_texto', 'text', 'Pregunta', 540, 470, 800, 240, text='¿Por qué sus envíos tardan tanto?', font='Cardo', fontSize=84, fontWeight=700, color='#5a1f33', align='center', lineHeight=1.1, stroke={'color': '#ffffff', 'width': 0}, shadow=False, start=0.8, **{'in': anim('pop', 0.6, 'back')}),
          ],
          'audio': [{'id': 'a1', 'asset': 'voz', 'start': 0.3, 'volume': 1, 'trimStart': 0, 'label': 'Narración de prueba'}]},
         {'id': 'scene_2', 'name': 'Respuesta', 'duration': 5,
          'background': {'color': '#fff6f1', 'asset': 'bg_crema', 'fit': 'cover'},
          'elements': [
-             el('s2_maria', 'image', 'María', 400, 1000, 540, 810, asset='maria', fit='contain', **{'in': anim('slide-right', 0.7), 'loop': {'type': 'sway', 'amount': 0.6, 'speed': 1}}),
+             el('s2_personaje', 'image', 'Personaje 2', 400, 1000, 540, 810, asset='personaje_2', fit='contain', **{'in': anim('slide-right', 0.7), 'loop': {'type': 'sway', 'amount': 0.6, 'speed': 1}}),
              el('s2_producto', 'image', 'Producto', 770, 980, 250, 650, asset='primer', fit='contain', start=0.5, **{'in': anim('zoom', 0.6), 'loop': {'type': 'pulse', 'amount': 1, 'speed': 1}}),
              el('s2_chispas', 'effect', 'Destellos', 770, 980, 420, 700, effect='sparkles', color='#e8a0b8', count=12, size=40, speed=1.3, seed=21, start=0.9),
              el('s2_pildora', 'shape', 'Pastilla', 540, 380, 760, 150, shape='rounded', fill='#c24770', radius=75, stroke={'color': '#ffffff', 'width': 0}, start=0.2, **{'in': anim('slide-down', 0.6)}),

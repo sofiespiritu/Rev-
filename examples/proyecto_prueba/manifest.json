@@ -31,15 +31,15 @@
       "path": "assets/images/logo_espirit_beauty.png",
       "name": "Logo Espirit Beauty"
     },
-    "juanita": {
+    "personaje_1": {
       "type": "image",
-      "path": "assets/characters/juanita.png",
-      "name": "Juanita (provisional)"
+      "path": "assets/characters/personaje_1.png",
+      "name": "Personaje 1 (provisional)"
     },
-    "maria": {
+    "personaje_2": {
       "type": "image",
-      "path": "assets/characters/maria.png",
-      "name": "María (provisional)"
+      "path": "assets/characters/personaje_2.png",
+      "name": "Personaje 2 (provisional)"
     },
     "primer": {
       "type": "image",
@@ -119,9 +119,9 @@
           "seed": 7
         },
         {
-          "id": "s1_juanita",
+          "id": "s1_personaje",
           "type": "image",
-          "name": "Juanita",
+          "name": "Personaje 1",
           "x": 540,
           "y": 1010,
           "width": 560,
@@ -132,7 +132,7 @@
           "duration": 0,
           "visible": true,
           "locked": false,
-          "asset": "juanita",
+          "asset": "personaje_1",
           "fit": "contain",
           "in": {
             "type": "slide-up",
@@ -200,9 +200,9 @@
       },
       "elements": [
         {
-          "id": "s2_maria",
+          "id": "s2_personaje",
           "type": "image",
-          "name": "María",
+          "name": "Personaje 2",
           "x": 400,
           "y": 1000,
           "width": 540,
@@ -213,7 +213,7 @@
           "duration": 0,
           "visible": true,
           "locked": false,
-          "asset": "maria",
+          "asset": "personaje_2",
           "fit": "contain",
           "in": {
             "type": "slide-right",

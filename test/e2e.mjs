@@ -72,15 +72,15 @@ const after = await page.evaluate(() => { const e = window.__REV.project.scenes[
 ok(Math.abs(after[0] - before[0] - 100) < 8 && Math.abs(after[1] - before[1] - 120) < 8, `arrastra el texto en el lienzo (${before} -> ${after})`);
 // 2d reemplazar imagen del personaje por el producto
 await page.click('#tabs [data-tab=capas]');
-await page.click('.layer .nm:has-text("Juanita")');
+await page.click('.layer .nm:has-text("Personaje 1")');
 const [chooser] = await Promise.all([page.waitForEvent('filechooser'), page.click('#panel button:has-text("Reemplazar")')]);
-await chooser.setFiles(path.join(ROOT, 'examples/proyecto_prueba/assets/characters/maria.png'));
+await chooser.setFiles(path.join(ROOT, 'examples/proyecto_prueba/assets/characters/personaje_2.png'));
 await page.waitForTimeout(400);
-const rep = await page.evaluate(() => { const P = window.__REV.project; const e = P.scenes[0].elements.find((e) => e.id === 's1_juanita'); return { asset: e.asset, path: P.assets[e.asset].path, has: window.__REV.files.has(P.assets[e.asset].path) }; });
+const rep = await page.evaluate(() => { const P = window.__REV.project; const e = P.scenes[0].elements.find((e) => e.id === 's1_personaje'); return { asset: e.asset, path: P.assets[e.asset].path, has: window.__REV.files.has(P.assets[e.asset].path) }; });
 ok(rep.asset !== 'juanita' && rep.has, `reemplaza la imagen (nuevo recurso ${rep.path})`);
-// 2e animación: cambiar entrada de Juanita a zoom
+// 2e animación: cambiar entrada de Personaje 1 a zoom
 await page.evaluate(() => { const row = [...document.querySelectorAll('#panel .row')].find((r) => r.querySelector('label')?.textContent === 'Entrada'); const s = row.querySelector('select'); s.value = 'zoom'; s.dispatchEvent(new Event('change')); });
-ok(await page.evaluate(() => window.__REV.project.scenes[0].elements.find((e) => e.id === 's1_juanita').in.type) === 'zoom', 'cambia la animación de entrada');
+ok(await page.evaluate(() => window.__REV.project.scenes[0].elements.find((e) => e.id === 's1_personaje').in.type) === 'zoom', 'cambia la animación de entrada');
 // 2f desactivar capa (ojo) y reactivar
 await page.click('#tabs [data-tab=capas]');
 await page.click('.layer:has-text("Destellos") .btn[title="Mostrar/ocultar"]');
