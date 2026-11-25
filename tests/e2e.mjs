@@ -173,6 +173,14 @@ try {
   await page2.locator('#btnResume').click(); await page2.waitForSelector('#app:not([hidden])');
   ok((await page2.evaluate(() => REV_APP.state.manifest.meta.title)) === 'Demo editada', 'Continuar restaura el proyecto guardado');
 
+  /* 12b. cerrar el proyecto y abrir otro (error reportado en iPhone) */
+  await page2.locator('#btnProject').click();
+  const cl = page2.locator('.props .btn', { hasText: /Cerrar proyecto|Seguro/ }); await cl.click(); await cl.click();
+  await page2.waitForSelector('#home:not([hidden])');
+  await page2.setInputFiles('#fileOpen', join(root, 'samples/espirit-demo.zip'));
+  await page2.waitForSelector('#app:not([hidden])'); await page2.waitForSelector('.bar.scene');
+  ok((await page2.evaluate(() => REV_APP.state.manifest.meta.title)) === 'Espirit Beauty · Demo', 'Cerrar un proyecto y abrir otro funciona');
+
   /* 14. escritorio */
   const pd = await browser.newPage({ viewport: { width: 1280, height: 800 } });
   await pd.goto(URL_); await pd.setInputFiles('#fileOpen', dlPath); await pd.waitForSelector('.bar.scene'); await pd.waitForTimeout(500);

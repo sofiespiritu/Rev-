@@ -76,7 +76,7 @@
       this._loop = this._loop.bind(this);
       this.onTick = null; this.onEnd = null;
     }
-    get m() { return this.app.state.manifest; }
+    get m() { return this.app.state ? this.app.state.manifest : null; }
 
     locate(t) {
       const m = this.m, starts = S.sceneStarts(m);
@@ -308,6 +308,7 @@
     }
     pause() {
       this.playing = false;
+      if (!this.m) return;
       this.audio.forEach((n) => { n.active = false; if (!n.el.paused) n.el.pause(); });
       this.nodes.forEach((n) => { if (n.el.type === 'video') n.content.pause(); });
       if (this.bgVideo) this.bgVideo.pause();
